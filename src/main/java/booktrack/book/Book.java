@@ -1,4 +1,4 @@
-package book;
+package booktrack.book;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,0 +1,29 @@
+###
+
+# curl -X POST http://localhost:8080/api/books
+#  -H "Content-Type: application/json"
+#  -d '{
+#    "title": "Clean Code",
+#    "author": "Robert C. Martin",
+#    "isbn": "978-0132350884",
+#    "publisher": "Prentice Hall",
+#    "publishYear": 2008
+#  }'
+POST http://localhost:8080/api/books
+Content-Type: application/json
+
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "isbn": "978-0132350884",
+  "publisher": "Prentice Hall",
+  "publishYear": 2008
+}
+
+###
+# curl http://localhost:8080/api/books/available
+GET http://localhost:8080/api/books/available
+
+###
+
+

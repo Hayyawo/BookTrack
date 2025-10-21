@@ -19,6 +19,12 @@ spring:
     enabled: true
     baseline-on-migrate: true
 
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: USER,ADMIN
+
 logging:
   level:
     org.flywaydb: DEBUG

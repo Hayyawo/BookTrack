@@ -1,49 +1,44 @@
-package loan;
+package booktrack.user;
 
-import book.Book;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import user.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "loans")
+@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Loan {
-
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", nullable = false)
-    private Book book;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
-    private LocalDate loanDate;
+    private String password;
 
     @Column(nullable = false)
-    private LocalDate dueDate;
+    private String firstName;
 
-    private LocalDate returnDate;
+    @Column(nullable = false)
+    private String lastName;
 
     @Enumerated(EnumType.STRING)
-    private LoanStatus status = LoanStatus.ACTIVE;
+    private Role role = Role.USER;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 }

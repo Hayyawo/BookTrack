@@ -1,4 +1,4 @@
-package user;
+package booktrack.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
