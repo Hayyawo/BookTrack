@@ -1,5 +1,6 @@
 package booktrack.book;
 
+import booktrack.book.dto.BookDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,13 +16,13 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("/available")
-    public Page<Book> getAvailableBooks(
+    public Page<BookDto> getAvailableBooks(
             @PageableDefault(size = 20, sort = "title") Pageable pageable) {
         return bookService.getAvailableBooks(pageable);
     }
 
     @GetMapping("/{id}")
-    public Book getBook(@PathVariable Long id) {
+    public BookDto getBook(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
 
