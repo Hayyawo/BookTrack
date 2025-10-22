@@ -1,6 +1,7 @@
 package booktrack.book;
 
 import booktrack.book.dto.BookDto;
+import booktrack.book.dto.CreateBookRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Book createBook(@RequestBody Book book) {
+    public BookDto createBook(@RequestBody CreateBookRequest book) {
         return bookService.createBook(book);
     }
 }

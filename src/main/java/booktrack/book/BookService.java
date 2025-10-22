@@ -2,6 +2,9 @@ package booktrack.book;
 
 import booktrack.book.dto.BookDto;
 import booktrack.book.dto.BookMapper;
+import booktrack.book.dto.CreateBookRequest;
+import booktrack.book.dto.UpdateBookRequest;
+import booktrack.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +31,18 @@ public class BookService {
     }
 
     @Transactional
-    public Book createBook(Book book) {
-        return bookRepository.save(book);
+    public BookDto createBook(CreateBookRequest book) {
+        Book bookMapperEntity = bookMapper.toEntity(book);
+        Book bookEntity = bookRepository.save(bookMapperEntity);
+        return bookMapper.toDto(bookEntity);
+    }
+
+    @Transactional
+    public BookDto updateBook(long id, UpdateBookRequest book) {
+        Book foundBook = bookRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Book not found"));
+         bookMapper.updateEntityFromDto(book, foundBook);
+        Book updatedBook = bookRepository.save(foundBook);
+        return bookMapper.toDto(updatedBook);
     }
 }
