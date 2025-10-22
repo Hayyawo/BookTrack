@@ -45,4 +45,12 @@ public class BookService {
         Book updatedBook = bookRepository.save(foundBook);
         return bookMapper.toDto(updatedBook);
     }
+
+    @Transactional
+    public void deleteBook(long id) {
+        if (!bookRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Book not found with id " + id);
+        }
+        bookRepository.deleteById(id);
+    }
 }
