@@ -26,7 +26,7 @@ public class BookService {
 
     public BookDto getBookById(Long id) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id " + id));
         return bookMapper.toDto(book);
     }
 

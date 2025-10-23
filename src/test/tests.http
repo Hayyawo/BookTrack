@@ -43,6 +43,12 @@ Content-Type: application/json
 
 ###
 
+# curl http://localhost:8080/api/books/999
+GET http://localhost:8080/api/books/999
+
+###
+
+
 
 
 
