@@ -1,4 +1,4 @@
-package booktrack.user.dto;
+package booktrack.loan.dto;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;

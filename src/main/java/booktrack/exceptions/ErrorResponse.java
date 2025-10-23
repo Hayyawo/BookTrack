@@ -3,6 +3,7 @@ package booktrack.exceptions;
 import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -13,5 +14,5 @@ public class ErrorResponse {
     private String message;
     private String path;
     private LocalDateTime timestamp;
-    private Map<String, String> validationErrors;
+    private Map<String, List<String>> validationErrors;
 }

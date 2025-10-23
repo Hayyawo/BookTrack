@@ -33,6 +33,7 @@ public class BookService {
     @Transactional
     public BookDto createBook(CreateBookRequest book) {
         Book bookMapperEntity = bookMapper.toEntity(book);
+        bookMapperEntity.setAvailable(true);
         Book bookEntity = bookRepository.save(bookMapperEntity);
         return bookMapper.toDto(bookEntity);
     }
@@ -41,7 +42,7 @@ public class BookService {
     public BookDto updateBook(long id, UpdateBookRequest book) {
         Book foundBook = bookRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Book not found"));
-         bookMapper.updateEntityFromDto(book, foundBook);
+        bookMapper.updateEntityFromDto(book, foundBook);
         Book updatedBook = bookRepository.save(foundBook);
         return bookMapper.toDto(updatedBook);
     }

@@ -14,7 +14,7 @@ public class CreateBookRequest {
     @Size(min = 1, max = 255, message = "Author must be between 1 and 255 characters")
     private String author;
 
-    @Pattern(regexp = "^(97(8|9))?\\d{9}(\\d|X)$", message = "Invalid ISBN format")
+    @Pattern(regexp = "^(?:\\d[\\s-]?){9}[\\dXx]$|^(?:\\d[\\s-]?){13}$\n", message = "Invalid ISBN format")
     private String isbn;
 
     @Size(max = 255, message = "Publisher name too long")

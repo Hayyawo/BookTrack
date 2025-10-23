@@ -15,7 +15,7 @@ Content-Type: application/json
 {
   "title": "Clean Code",
   "author": "Robert C. Martin",
-  "isbn": "978-0132350884",
+  "isbn": "0-306-40615-2",
   "publisher": "Prentice Hall",
   "publishYear": 2008
 }
@@ -25,5 +25,24 @@ Content-Type: application/json
 GET http://localhost:8080/api/books/available
 
 ###
+# curl -X POST http://localhost:8080/api/books
+#  -H "Content-Type: application/json"
+#  -d '{
+#    "title": "",
+#    "author": "R",
+#    "isbn": "invalid"
+#  }'
+POST http://localhost:8080/api/books
+Content-Type: application/json
+
+{
+  "title": "",
+  "author": "",
+  "isbn": "0-306-40615-2"
+}
+
+###
+
+
 
 

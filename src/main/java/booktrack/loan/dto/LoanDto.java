@@ -1,7 +1,8 @@
-package booktrack.user.dto;
+package booktrack.loan.dto;
 
 import booktrack.book.dto.BookDto;
 import booktrack.loan.LoanStatus;
+import booktrack.user.dto.UserDto;
 import lombok.Data;
 
 import java.time.LocalDate;
