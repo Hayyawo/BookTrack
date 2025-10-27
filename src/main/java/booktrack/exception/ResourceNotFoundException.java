@@ -1,4 +1,4 @@
-package booktrack.exceptions;
+package booktrack.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {

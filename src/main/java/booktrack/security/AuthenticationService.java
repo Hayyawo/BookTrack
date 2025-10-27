@@ -1,6 +1,7 @@
 package booktrack.security;
 
-import booktrack.exceptions.ResourceNotFoundException;
+import booktrack.exception.EmailAlreadyExistsException;
+import booktrack.exception.ResourceNotFoundException;
 import booktrack.security.dto.AuthenticationRequest;
 import booktrack.security.dto.AuthenticationResponse;
 import booktrack.security.dto.RegisterRequest;
@@ -23,7 +24,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new EmailAlreadyExistsException("Email already exists");
         }
 
         User user = User.builder()
