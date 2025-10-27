@@ -48,6 +48,54 @@ GET http://localhost:8080/api/books/999
 
 ###
 
+# curl -X POST http://localhost:8080/api/auth/register
+#  -H "Content-Type: application/json"
+#  -d '{
+#    "email": "jan.kowalski@example.com",
+#    "password": "Password123!",
+#    "firstName": "Jan",
+#    "lastName": "Kowalski"
+#  }'
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "jan.kowalski@example.com",
+  "password": "Testing193@",
+  "firstName": "Jan",
+  "lastName": "Kowalski"
+}
+
+###
+
+# curl -X POST http://localhost:8080/api/auth/login
+#  -H "Content-Type: application/json"
+#  -d '{
+#    "email": "jan.kowalski@example.com",
+#    "password": "Password123!"
+#  }'
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "jan.kowalski@example.com",
+  "password": "Testing193@"
+}
+
+###
+# curl http://localhost:8080/api/loans
+GET http://localhost:8080/api/loans
+
+###
+
+# curl http://localhost:8080/api/loans
+#  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9..."
+GET http://localhost:8080/api/loans
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+
+###
+
+
 
 
 
