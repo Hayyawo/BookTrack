@@ -1,7 +1,6 @@
 package booktrack.book;
 
 import booktrack.book.dto.BookDto;
-import booktrack.book.dto.BookMapper;
 import booktrack.book.dto.CreateBookRequest;
 import booktrack.book.dto.UpdateBookRequest;
 import booktrack.exception.ResourceNotFoundException;

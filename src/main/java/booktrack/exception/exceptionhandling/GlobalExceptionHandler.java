@@ -1,5 +1,9 @@
-package booktrack.exception;
+package booktrack.exception.exceptionhandling;
 
+import booktrack.exception.BookNotAvailableException;
+import booktrack.exception.InvalidLoanOperationException;
+import booktrack.exception.LoanLimitExceededException;
+import booktrack.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -1,4 +1,4 @@
-package booktrack.exception;
+package booktrack.exception.exceptionhandling;
 
 import lombok.Builder;
 import lombok.Data;
