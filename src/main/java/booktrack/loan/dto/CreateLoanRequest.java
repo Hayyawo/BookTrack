@@ -3,9 +3,11 @@ package booktrack.loan.dto;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 public class CreateLoanRequest {
 
     @NotNull(message = "User ID is required")
