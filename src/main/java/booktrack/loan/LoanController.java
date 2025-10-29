@@ -18,4 +18,10 @@ public class LoanController {
     public LoanDto createLoan(@Valid @RequestBody CreateLoanRequest request) {
         return loanService.createLoan(request);
     }
+
+    @PutMapping("/{loanId}/return")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public LoanDto returnBook(@PathVariable Long loanId) {
+        return loanService.returnBook(loanId);
+    }
 }
