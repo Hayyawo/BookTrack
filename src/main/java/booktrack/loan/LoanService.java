@@ -11,10 +11,14 @@ import booktrack.loan.dto.LoanDto;
 import booktrack.user.User;
 import booktrack.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -68,5 +72,53 @@ public class LoanService {
 
         Loan savedLoan = loanRepository.save(loan);
         return loanMapper.toDto(savedLoan);
+    }
+
+    @Transactional
+    public LoanDto returnBook(long loanId) {
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new ResourceNotFoundException("Loan not found"));
+
+        loan.setStatus(LoanStatus.RETURNED);
+        loan.setReturnDate(LocalDate.now());
+
+        Book book = loan.getBook();
+        book.setAvailable(true);
+
+        bookRepository.save(book);
+        loanRepository.save(loan);
+
+        return loanMapper.toDto(loan);
+    }
+
+    public Page<LoanDto> getUserLoans(long userId, Pageable pageable){
+        if(!userRepository.existsById(userId)){
+            throw new ResourceNotFoundException("User not found with id " + userId);
+        }
+
+        return loanRepository.findByUserId(userId, pageable)
+                .map(loanMapper::toDto);
+    }
+
+    public LoanDto getLoanById(long loanId) {
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new ResourceNotFoundException("Loan not found with id " + loanId));
+
+        return loanMapper.toDto(loan);
+    }
+
+    public List<LoanDto> getOverdueLoans() {
+        List<Loan> overdueLoans = loanRepository.findOverdueLoans(LocalDate.now());
+
+        overdueLoans.forEach(loan -> {
+            if (loan.getStatus() == LoanStatus.ACTIVE) {
+                loan.setStatus(LoanStatus.OVERDUE);
+                loanRepository.save(loan);
+            }
+        });
+
+        return overdueLoans.stream()
+                .map(loanMapper::toDto)
+                .collect(Collectors.toList());
     }
 }
