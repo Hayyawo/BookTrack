@@ -120,4 +120,9 @@ public class LoanService {
                 .map(loanMapper::toDto)
                 .toList();
     }
+
+    public Page<LoanDto> getAllLoans(Pageable pageable) {
+        return loanRepository.findAll(pageable)
+                .map(loanMapper::toDto);
+    }
 }

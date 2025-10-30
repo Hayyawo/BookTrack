@@ -8,7 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -38,4 +41,16 @@ public class LoanController {
         return loanService.getLoanById(id);
     }
 
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public Page<LoanDto> getAllLoans(
+            @PageableDefault(size = 20, sort = "loanDate") Pageable pageable) {
+        return loanService.getAllLoans(pageable);
+    }
+
+    @GetMapping("/overdue")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<LoanDto> getOverdueLoans() {
+        return loanService.getOverdueLoans();
+    }
 }
