@@ -20,7 +20,6 @@ public class CreateLoanRequest {
     @PastOrPresent(message = "Loan date cannot be in the future")
     private LocalDate loanDate;
 
-    @NotNull(message = "Due date is required")
     @Future(message = "Due date must be in the future")
     private LocalDate dueDate;
 }
