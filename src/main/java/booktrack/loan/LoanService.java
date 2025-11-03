@@ -60,7 +60,7 @@ public class LoanService {
 
         Loan loan = Loan.builder()
                 .loanDate(loanDate)
-                .returnDate(dueDate)
+                .dueDate(dueDate)
                 .status(LoanStatus.ACTIVE)
                 .user(user)
                 .book(book)

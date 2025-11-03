@@ -9,13 +9,15 @@
 #    "publisher": "Prentice Hall",
 #    "publishYear": 2008
 #  }'
+@TOKEN1 = eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqYW4ua293YWxza2lAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjIxNTMyNjksImV4cCI6MTc2MjIzOTY2OX0._ZrmMHZJkVoF2MUrETahU4RUdnTCvNiXXkwzB7oTf4HhnmDuH66isK9GhtwLmPPg
 POST http://localhost:8080/api/books
+Authorization: Bearer {{TOKEN1}}
 Content-Type: application/json
 
 {
-  "title": "Clean Code",
+  "title": "Clean Code 3",
   "author": "Robert C. Martin",
-  "isbn": "0-306-40615-2",
+  "isbn": "0-306-40615-9",
   "publisher": "Prentice Hall",
   "publishYear": 2008
 }
@@ -94,6 +96,69 @@ GET http://localhost:8080/api/loans
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
 
 ###
+@TOKEN = eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqYW4ua293YWxza2lAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjIxNTI3NTUsImV4cCI6MTc2MjIzOTE1NX0.Y6KoTN80WvwwehjVJy5-aDUyuKbq6gjd52q3fOdgjpM2liPYOceAYXpYLaqGHIVI
+# curl -X POST http://localhost:8080/api/loans
+#  -H "Authorization: Bearer $TOKEN"
+#  -H "Content-Type: application/json"
+#  -d '{
+#    "userId": 1,
+#    "bookId": 1,
+#    "loanDate": "2025-01-15"
+#  }'
+POST http://localhost:8080/api/loans
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "bookId": 1,
+  "loanDate": "2025-11-01"
+}
+
+###
+
+# curl -X POST http://localhost:8080/api/loans
+#  -H "Authorization: Bearer $TOKEN"
+#  -H "Content-Type: application/json"
+#  -d '{
+#    "userId": 1,
+#    "bookId": 1,
+#    "loanDate": "2025-01-15"
+#  }'
+POST http://localhost:8080/api/loans
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "bookId": 4,
+  "loanDate": "2025-01-15"
+}
+
+###
+
+# curl -X PUT http://localhost:8080/api/loans/1/return
+#  -H "Authorization: Bearer $TOKEN"
+PUT http://localhost:8080/api/loans/19/return
+Authorization: Bearer {{TOKEN}}
+
+###
+# curl http://localhost:8080/api/loans/overdue
+#  -H "Authorization: Bearer $ADMIN_TOKEN"
+GET http://localhost:8080/api/loans/overdue
+Authorization: Bearer {{TOKEN}}
+
+###
+
+# curl http://localhost:8080/api/loans/user/1
+#  -H "Authorization: Bearer $TOKEN"
+GET http://localhost:8080/api/loans/user/1
+Authorization: Bearer {{TOKEN}}
+###
+
+
+
+
 
 
 

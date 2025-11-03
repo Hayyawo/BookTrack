@@ -16,7 +16,6 @@ public class CreateLoanRequest {
     @NotNull(message = "Book ID is required")
     private Long bookId;
 
-    @NotNull(message = "Loan date is required")
     @PastOrPresent(message = "Loan date cannot be in the future")
     private LocalDate loanDate;
 
