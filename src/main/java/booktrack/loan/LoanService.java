@@ -34,9 +34,9 @@ public class LoanService {
     @Transactional
     public LoanDto createLoan(CreateLoanRequest request) {
         Book book = bookRepository.findById(request.getBookId())
-                .orElseThrow(() -> new ResourceNotFoundException("Book not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id " + request.getBookId()));
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + request.getUserId()));
 
         long activeLoans = loanRepository.countActiveLoansForUser(user.getId());
         if (activeLoans >= MAX_ACTIVE_LOANS) {
