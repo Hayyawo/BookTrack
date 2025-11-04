@@ -1,9 +1,5 @@
-package com.example.booktrack.book;
+package booktrack.book;
 
-import booktrack.book.Book;
-import booktrack.book.BookMapper;
-import booktrack.book.BookRepository;
-import booktrack.book.BookService;
 import booktrack.book.dto.BookDto;
 import booktrack.book.dto.CreateBookRequest;
 import booktrack.book.dto.UpdateBookRequest;

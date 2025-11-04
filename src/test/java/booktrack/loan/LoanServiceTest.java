@@ -1,4 +1,4 @@
-package com.example.booktrack.loan;
+package booktrack.loan;
 
 import booktrack.book.Book;
 import booktrack.book.BookRepository;
@@ -6,7 +6,6 @@ import booktrack.exception.BookNotAvailableException;
 import booktrack.exception.InvalidLoanOperationException;
 import booktrack.exception.LoanLimitExceededException;
 import booktrack.exception.ResourceNotFoundException;
-import booktrack.loan.*;
 import booktrack.loan.dto.CreateLoanRequest;
 import booktrack.loan.dto.LoanDto;
 import booktrack.user.Role;

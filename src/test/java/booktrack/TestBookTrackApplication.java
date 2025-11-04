@@ -1,6 +1,5 @@
-package com.example.booktrack;
+package booktrack;
 
-import booktrack.BookTrackApplication;
 import org.springframework.boot.SpringApplication;
 
 public class TestBookTrackApplication {
