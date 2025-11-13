@@ -5,6 +5,8 @@ import booktrack.book.dto.CreateBookRequest;
 import booktrack.book.dto.UpdateBookRequest;
 import booktrack.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,13 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
+    @Cacheable(value = "availableBooks")
     public Page<BookDto> getAvailableBooks(Pageable pageable) {
         return bookRepository.findByAvailableTrue(pageable)
                 .map(bookMapper::toDto);
     }
 
+    @Cacheable(value = "books", key = "#id")
     public BookDto getBookById(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book not found with id " + id));
@@ -30,6 +34,7 @@ public class BookService {
     }
 
     @Transactional
+    @CacheEvict(value = {"books", "availableBooks"}, allEntries = true)
     public BookDto createBook(CreateBookRequest book) {
         Book bookMapperEntity = bookMapper.toEntity(book);
         bookMapperEntity.setAvailable(true);
