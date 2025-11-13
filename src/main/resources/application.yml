@@ -29,7 +29,17 @@ spring:
       password: admin
       roles: USER,ADMIN
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
 logging:
   level:
     org.flywaydb: DEBUG
     org.hibernate.SQL: DEBUG
+    org.springdoc: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration: DEBUG
