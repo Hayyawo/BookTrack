@@ -11,6 +11,9 @@ import booktrack.loan.dto.LoanDto;
 import booktrack.user.User;
 import booktrack.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,12 @@ public class LoanService {
     private final UserRepository userRepository;
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "loans", allEntries = true),
+            @CacheEvict(value = "userLoans", allEntries = true),
+            @CacheEvict(value = "availableBooks", allEntries = true),
+            @CacheEvict(value = "books", key = "#request.bookId")
+    })
     public LoanDto createLoan(CreateLoanRequest request) {
         Book book = bookRepository.findById(request.getBookId())
                 .orElseThrow(() -> new ResourceNotFoundException("Book not found with id " + request.getBookId()));
@@ -74,6 +83,12 @@ public class LoanService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "loans", key = "#loanId"),
+            @CacheEvict(value = "userLoans", allEntries = true),
+            @CacheEvict(value = "availableBooks", allEntries = true),
+            @CacheEvict(value = "overdueLoans", allEntries = true)
+    })
     public LoanDto returnBook(long loanId) {
         Loan loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new ResourceNotFoundException("Loan not found"));
@@ -99,6 +114,7 @@ public class LoanService {
                 .map(loanMapper::toDto);
     }
 
+    @Cacheable(value = "loans", key = "#id")
     public LoanDto getLoanById(long loanId) {
         Loan loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new ResourceNotFoundException("Loan not found with id " + loanId));
@@ -106,6 +122,7 @@ public class LoanService {
         return loanMapper.toDto(loan);
     }
 
+    @Cacheable(value = "overdueLoans")
     public List<LoanDto> getOverdueLoans() {
         List<Loan> overdueLoans = loanRepository.findOverdueLoans(LocalDate.now());
 
