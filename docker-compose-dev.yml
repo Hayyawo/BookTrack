@@ -2,16 +2,66 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:16
+    image: postgres:16-alpine
     container_name: booktrack-postgres
     environment:
       POSTGRES_DB: booktrack
       POSTGRES_USER: booktrack
-      POSTGRES_PASSWORD: booktrack123
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    secrets:
+      - db_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U booktrack"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - booktrack-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: booktrack-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/booktrack
+      SPRING_DATASOURCE_USERNAME: booktrack
+      SPRING_DATASOURCE_PASSWORD_FILE: /run/secrets/db_password
+      JWT_SECRET_KEY_FILE: /run/secrets/jwt_secret
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    secrets:
+      - db_password
+      - jwt_secret
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - booktrack-network
+    restart: unless-stopped
 
 volumes:
   postgres_data:
+    driver: local
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  jwt_secret:
+    file: ./secrets/jwt_secret.txt
+
+networks:
+  booktrack-network:
+    driver: bridge
