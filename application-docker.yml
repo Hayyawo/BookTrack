@@ -1,0 +1,22 @@
+# src/main/resources/application-docker.yml
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  expiration-ms: 86400000
+
+logging:
+  level:
+    root: INFO
+    com.yourname.booktrack: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
