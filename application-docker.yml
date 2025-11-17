@@ -1,9 +1,9 @@
 # src/main/resources/application-docker.yml
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:5432/booktrack}
+    username: ${SPRING_DATASOURCE_USERNAME:booktrack}
+    password: ${SPRING_DATASOURCE_PASSWORD:booktrack123}
 
   jpa:
     show-sql: false
