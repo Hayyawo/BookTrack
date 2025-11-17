@@ -1,0 +1,19 @@
+# docker-compose.prod.yml
+version: '3.8'
+
+services:
+  app:
+    image: booktrack:latest
+    deploy:
+      replicas: 2  # Load balancing
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
