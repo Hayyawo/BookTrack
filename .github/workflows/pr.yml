@@ -1,8 +1,12 @@
 name: Pull Request Checks
 
 on:
+  push:
+    branches:
+      - '**'
   pull_request:
-    branches: [ main, develop ]
+    branches:
+      - '**'
 
 jobs:
   lint:
