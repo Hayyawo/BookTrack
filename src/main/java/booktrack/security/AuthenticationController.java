@@ -25,10 +25,12 @@ public class AuthenticationController {
             summary = "Register new user",
             description = "Creates a new user account with USER role"
     )
-    @ApiResponse(responseCode = "200", description = "User registered successfully")
-    @ApiResponse(responseCode = "400", description = "Invalid input or email already exists")
+    @ApiResponse(responseCode = "200",
+            description = "User registered successfully")
+    @ApiResponse(responseCode = "400",
+            description = "Invalid input or email already exists")
     public ResponseEntity<AuthenticationResponse> register(
-            @Valid @RequestBody RegisterRequest request
+            @Valid @RequestBody final RegisterRequest request
     ) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
@@ -41,7 +43,7 @@ public class AuthenticationController {
     @ApiResponse(responseCode = "200", description = "Login successful")
     @ApiResponse(responseCode = "401", description = "Invalid credentials")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @Valid @RequestBody AuthenticationRequest request
+            @Valid @RequestBody final AuthenticationRequest request
     ) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }

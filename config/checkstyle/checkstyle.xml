@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<module name="Checker">
+
+    <property name="severity" value="warning"/>
+
+    <module name="TreeWalker">
+
+        <module name="JavadocVariable">
+            <property name="scope" value="public"/>
+        </module>
+        <module name="JavadocMethod">
+            <property name="scope" value="public"/>
+        </module>
+
+        <module name="JavadocType"/>
+
+        <module name="WhitespaceAround"/>
+        <module name="WhitespaceAfter"/>
+        <module name="NeedBraces"/>
+        <module name="LeftCurly"/>
+        <module name="RightCurly"/>
+        <module name="FinalLocalVariable"/>
+        <module name="EqualsHashCode"/>
+        <module name="EmptyBlock"/>
+        <module name="EmptyCatchBlock"/>
+
+    </module>
+
+    <module name="LineLength">
+        <property name="max" value="140"/>
+    </module>
+
+</module>
