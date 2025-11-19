@@ -1,6 +1,30 @@
 # 📚 BookTrack - Book Lending Management System
 
+![CI/CD Pipeline](https://github.com/hayyawo/booktrack/actions/workflows/ci.yml/badge.svg)
+![Docker Image](https://img.shields.io/docker/v/czapija/booktrack?label=docker)
+![Java Version](https://img.shields.io/badge/Java-21-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 Modern book lending management system built with Spring Boot 3, featuring JWT authentication, role-based access control, and RESTful API.
+
+## 🚀 Quick Start
+
+### Using Docker (Recommended)
+```bash
+docker-compose up -d
+```
+
+### Using pre-built image from Docker Hub
+```bash
+docker run -d \
+  -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/booktrack \
+  -e SPRING_DATASOURCE_USERNAME=booktrack \
+  -e SPRING_DATASOURCE_PASSWORD=booktrack123 \
+  -e JWT_SECRET_KEY=your-secret-key \
+  -p 8080:8080 \
+  TWOJ_USERNAME/booktrack:latest
+```
 
 ## 🚀 Features
 
