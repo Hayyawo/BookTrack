@@ -43,3 +43,35 @@ logging:
     org.springdoc: DEBUG
     org.springframework.web: DEBUG
     org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    prometheus:
+      access: unrestricted
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+info:
+  app:
+    name: BookTrack
+    description: Book Lending Management System
+    version: 1.0.0
+    encoding: @project.build.sourceEncoding@
+    java:
+      version: @java.version@
