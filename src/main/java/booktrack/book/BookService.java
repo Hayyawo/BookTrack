@@ -3,6 +3,7 @@ package booktrack.book;
 import booktrack.book.dto.BookDto;
 import booktrack.book.dto.CreateBookRequest;
 import booktrack.book.dto.UpdateBookRequest;
+import booktrack.config.MetricsService;
 import booktrack.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,6 +20,7 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final MetricsService metricsService;
 
     @Cacheable(value = "availableBooks")
     public Page<BookDto> getAvailableBooks(Pageable pageable) {
@@ -39,6 +41,7 @@ public class BookService {
         Book bookMapperEntity = bookMapper.toEntity(book);
         bookMapperEntity.setAvailable(true);
         Book bookEntity = bookRepository.save(bookMapperEntity);
+        metricsService.incrementBooksAdded();
         return bookMapper.toDto(bookEntity);
     }
 

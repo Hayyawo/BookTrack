@@ -1,5 +1,6 @@
 package booktrack.security;
 
+import booktrack.config.MetricsService;
 import booktrack.exception.EmailAlreadyExistsException;
 import booktrack.exception.ResourceNotFoundException;
 import booktrack.security.dto.AuthenticationRequest;
@@ -21,6 +22,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final MetricsService metricsService;
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
@@ -37,6 +39,8 @@ public class AuthenticationService {
 
         userRepository.save(user);
         String jwt = jwtService.generateToken(user);
+
+        metricsService.incrementUsersRegistered();
 
         return AuthenticationResponse.builder()
                 .token(jwt)

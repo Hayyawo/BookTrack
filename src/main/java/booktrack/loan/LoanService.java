@@ -2,6 +2,7 @@ package booktrack.loan;
 
 import booktrack.book.Book;
 import booktrack.book.BookRepository;
+import booktrack.config.MetricsService;
 import booktrack.exception.BookNotAvailableException;
 import booktrack.exception.InvalidLoanOperationException;
 import booktrack.exception.LoanLimitExceededException;
@@ -33,6 +34,7 @@ public class LoanService {
     private final LoanMapper loanMapper;
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
+    private final MetricsService metricsService;
 
     @Transactional
     @Caching(evict = {
@@ -78,6 +80,8 @@ public class LoanService {
         book.setAvailable(false);
         bookRepository.save(book);
 
+        metricsService.incrementLoansCreated();
+
         Loan savedLoan = loanRepository.save(loan);
         return loanMapper.toDto(savedLoan);
     }
@@ -101,6 +105,8 @@ public class LoanService {
 
         bookRepository.save(book);
         loanRepository.save(loan);
+
+        metricsService.incrementLoansReturned();
 
         return loanMapper.toDto(loan);
     }
