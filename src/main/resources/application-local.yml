@@ -14,3 +14,9 @@ jwt:
 logging:
   level:
     booktrack: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

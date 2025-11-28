@@ -1,17 +1,15 @@
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:16
     container_name: booktrack-postgres
     environment:
       POSTGRES_DB: booktrack
       POSTGRES_USER: booktrack
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_PASSWORD: booktrack123
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    secrets:
-      - db_password
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U booktrack"]
       interval: 10s
@@ -36,23 +34,45 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+    networks:
+      - booktrack-network
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: booktrack-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - booktrack-network
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: booktrack-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
     networks:
       - booktrack-network
     restart: unless-stopped
 
 volumes:
   postgres_data:
-    driver: local
-
-secrets:
-  db_password:
-    file: ./secrets/db_password.txt
+  prometheus_data:
+  grafana_data:
 
 networks:
   booktrack-network:
